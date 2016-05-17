@@ -34,8 +34,27 @@ $(document).ready(function(){
   // machine picks a button;
   function machinePick(){
     var pick = buttonOrder[randomButton() - 1];
-    buttonEffect(pick);
-    machineSeq.push(pick);
+    console.log("machineSeq: " + machineSeq);
+    console.log("length: " + machineSeq.length);
+    if (machineSeq.length == 0){
+      // if the game just started, machine makes first pick
+      buttonEffect(pick);
+      console.log("empty");
+      machineSeq.push(pick);
+    } else {
+      machineSeq.push(pick);
+      //buttonEffect.apply(this, machineSeq);
+      for (var i = 0; i < machineSeq.length; i++){
+        buttonEffect(machineSeq[i]);
+        // setTimeout(function() {buttonEffect(machineSeq[i]);
+        //   i++;}, 1000);
+      }
+      // for (i < machineSeq.length; i++){
+      //   buttonEffect(machineSeq[i]);
+      // }
+      console.log("not empty");
+    }
+
     console.log("pick: " + pick);
     console.log("machineSeq: " + machineSeq);
   }
@@ -46,7 +65,7 @@ $(document).ready(function(){
       started = !started;
     }
     if (started){
-      setTimeout(function() { machinePick(); }, 1500);
+      setTimeout(function() { machinePick(); }, 2000);
       console.log("val: " + val);
       if (val === "left_upper_arc"){
         counter +=1;
