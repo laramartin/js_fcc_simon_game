@@ -5,7 +5,7 @@ $(document).ready(function(){
   // });
 
   var started = false;
-  var counter = "--";
+  var counter = 0;
   var userSeq = [];
 
   function displayCounts(num){
@@ -19,38 +19,40 @@ $(document).ready(function(){
   //   $(id).css({"border-color":color});
   // }
 
+  function buttonEffect(button){
+    var str = "#".concat(button);
+    $(str).effect("pulsate", {times:1}, 40 );
+  }
+
+
 
   $(".button").click(function() {
-    var hasStopped = false;
-    // if (started){
-    //   // if (val === "start_button"){
-    //   console.log("started");
-    //   started = false;
-    //   counter = "--";
-    //   hasStopped = true;
-    //   //}  else {
-    //   //   started = true;
-    //   //   counter = 0;
-    //   //   hasStopped = false;
-    //   //   console.log("STOP");
-    //   // }
-    // }
     var val = $(this).attr("id");
-    console.log("val: " + val);
-    if (val === "left_upper_arc"){
-      console.log("left upper");
-      // $("#left_upper_arc").css({"border-color":"#A9F5A9"});
-      $("#left_upper_arc").effect("pulsate", {times:1}, 40 );
-      // interval = setInterval(timer("left_upper_arc", "#A9F5A9"), 100);
-    } else if (val === "left_bottom_arc"){
-      console.log("left bottom");
-      $("#left_bottom_arc").css({"border-color":"#F2F5A9"});
-    } else if (val === "right_upper_arc"){
-      console.log("right upper");
-      $("#right_upper_arc").css({"border-color":"#F78181"});
-    } else if (val === "right_bottom_arc"){
-      console.log("right bottom");
-      $("#right_bottom_arc").css({"border-color":"#A9A9F5"});
+    if (val === "start_button"){
+      started = !started;
+    }
+    if (started){
+      console.log("val: " + val);
+      if (val === "left_upper_arc"){
+        counter +=1;
+        // $("#left_upper_arc").css({"border-color":"#A9F5A9"});
+        buttonEffect("left_upper_arc");
+        // interval = setInterval(timer("left_upper_arc", "#A9F5A9"), 100);
+      } else if (val === "left_bottom_arc"){
+        //$("#left_bottom_arc").css({"border-color":"#F2F5A9"});
+        buttonEffect("left_bottom_arc");
+        counter += 1;
+      } else if (val === "right_upper_arc"){
+        // $("#right_upper_arc").css({"border-color":"#F78181"});
+        buttonEffect("right_upper_arc");
+        counter += 1;
+      } else if (val === "right_bottom_arc"){
+        counter += 1;
+        // $("#right_bottom_arc").css({"border-color":"#A9A9F5"});
+        buttonEffect("right_bottom_arc");
+      } else if (val === "start_button"){
+        started = true;
+      }
     }
 
 
@@ -69,5 +71,5 @@ $(document).ready(function(){
   //     console.log("left upper");
   //   } else {console.log("else");}
   // });
-  displayCounts(counter);
+  displayCounts("--");
 });
