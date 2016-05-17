@@ -6,7 +6,9 @@ $(document).ready(function(){
 
   var started = false;
   var counter = 0;
+  var machineSeq = [];
   var userSeq = [];
+  var buttonOrder = ["left_upper_arc", "right_upper_arc", "left_bottom_arc", "right_bottom_arc"];
 
   function displayCounts(num){
     var html = "<p id=\"counter_display\">" + num + "</p>";
@@ -24,7 +26,19 @@ $(document).ready(function(){
     $(str).effect("pulsate", {times:1}, 40 );
   }
 
+  function randomButton(){
+    var num = Math.floor((Math.random() * 4) + 1);
+    return num;
+  }
 
+  // machine picks a button;
+  function machinePick(){
+    var pick = buttonOrder[randomButton() - 1];
+    buttonEffect(pick);
+    machineSeq.push(pick);
+    console.log("pick: " + pick);
+    console.log("machineSeq: " + machineSeq);
+  }
 
   $(".button").click(function() {
     var val = $(this).attr("id");
@@ -32,6 +46,7 @@ $(document).ready(function(){
       started = !started;
     }
     if (started){
+      setTimeout(function() { machinePick(); }, 1500);
       console.log("val: " + val);
       if (val === "left_upper_arc"){
         counter +=1;
