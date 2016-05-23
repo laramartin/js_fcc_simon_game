@@ -21,7 +21,11 @@ $(document).ready(function(){
 
   function buttonEffect(button){
     var str = "#".concat(button);
+    var index = buttonOrder.indexOf(button) + 1;
+    var url = "https://s3.amazonaws.com/freecodecamp/simonSound" + index + ".mp3";
+    var sound = new Audio(url);
     $(str).effect("pulsate", {times:1}, 40 );
+    sound.play();
   }
 
   function randomButton(){
