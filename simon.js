@@ -1,14 +1,12 @@
 $(document).ready(function(){
 
-  // $( "#left_upper_arc" ).click(function() {
-  //   console.log("left upper");
-  // });
-
   var started = false;
   var counter = 0;
   var machineSeq = [];
   var userSeq = [];
   var buttonOrder = ["left_upper_arc", "right_upper_arc", "left_bottom_arc", "right_bottom_arc"];
+  var iLoop = 0;
+  var userIsGuessing = false; // if false, machine picks, because user is not guessing
 
   function displayCounts(num){
     var html = "<p id=\"counter_display\">" + num + "</p>";
@@ -31,6 +29,22 @@ $(document).ready(function(){
     return num;
   }
 
+  function loop(){
+    // 1 second setTimeout
+    setTimeout(function () {
+      buttonEffect(machineSeq[iLoop]);
+      iLoop++;
+      //if counter < machineSeq.length, call function again
+      if (iLoop < machineSeq.length) {
+         loop();
+      }
+      console.log("seq: " + machineSeq);
+    }, 1000)
+    console.log("out function");
+    console.log("iloop: " + iLoop);
+    console.log("-----------");
+  }
+
   // machine picks a button;
   function machinePick(){
     var pick = buttonOrder[randomButton() - 1];
@@ -43,20 +57,18 @@ $(document).ready(function(){
       machineSeq.push(pick);
     } else {
       machineSeq.push(pick);
-      //buttonEffect.apply(this, machineSeq);
-      for (var i = 0; i < machineSeq.length; i++){
-        buttonEffect(machineSeq[i]);
-        // setTimeout(function() {buttonEffect(machineSeq[i]);
-        //   i++;}, 1000);
-      }
-      // for (i < machineSeq.length; i++){
-      //   buttonEffect(machineSeq[i]);
-      // }
+      loop();
+      iLoop = 0;
       console.log("not empty");
     }
-
     console.log("pick: " + pick);
     console.log("machineSeq: " + machineSeq);
+  }
+
+  function userPick(){
+    if (!userIsGuessing){
+
+    }
   }
 
   $(".button").click(function() {
