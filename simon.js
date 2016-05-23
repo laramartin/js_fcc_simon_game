@@ -6,18 +6,13 @@ $(document).ready(function(){
   var userSeq = [];
   var buttonOrder = ["left_upper_arc", "right_upper_arc", "left_bottom_arc", "right_bottom_arc"];
   var iLoop = 0;
-  var userIsGuessing = false; // if false, machine picks, because user is not guessing
+  var userTurn = false; // if false, it's machine's turn
+  var val = "";
 
   function displayCounts(num){
     var html = "<p id=\"counter_display\">" + num + "</p>";
     $("#counter_display").html(html);
   };
-
-  // function timer(buttonColor, lightCode){
-  //   var id = "#".concat(buttonColor);
-  //   var color = "#".concat(lightCode)
-  //   $(id).css({"border-color":color});
-  // }
 
   function buttonEffect(button){
     var str = "#".concat(button);
@@ -52,6 +47,7 @@ $(document).ready(function(){
   // machine picks a button;
   function machinePick(){
     var pick = buttonOrder[randomButton() - 1];
+    userSeq = [];
     console.log("machineSeq: " + machineSeq);
     console.log("length: " + machineSeq.length);
     if (machineSeq.length == 0){
@@ -67,21 +63,33 @@ $(document).ready(function(){
     }
     console.log("pick: " + pick);
     console.log("machineSeq: " + machineSeq);
+    userTurn = true;
   }
 
   function userPick(){
-    if (!userIsGuessing){
-
+    var maxPicks = machineSeq.length;
+    var count = 0;
+    console.log("MAX PICKS: " + maxPicks);
+    if (count < maxPicks){
+      buttonEffect(val);
+      userSeq.push(val);
+      count++;
+    } else {
+      userTurn = false;
     }
   }
 
   $(".button").click(function() {
-    var val = $(this).attr("id");
+    val = $(this).attr("id");
     if (val === "start_button"){
       started = !started;
     }
     if (started){
-      setTimeout(function() { machinePick(); }, 2000);
+      if (!userTurn){
+        setTimeout(function() { machinePick(); }, 2000);
+      } else {
+        userPick();
+      }
       console.log("val: " + val);
       if (val === "left_upper_arc"){
         counter +=1;
@@ -105,8 +113,7 @@ $(document).ready(function(){
       }
     }
 
-
-    userSeq.push(val);
+    //userSeq.push(val);
     console.log("userSeq: " + userSeq);
     console.log("started: " + started);
     console.log("counter: " + counter);
@@ -115,11 +122,5 @@ $(document).ready(function(){
   });
 
 
-  // $("button").click(function() {
-  //   var val = $(this).attr("value");
-  //   if (val === "left_upper_arc"){
-  //     console.log("left upper");
-  //   } else {console.log("else");}
-  // });
   displayCounts("--");
 });
