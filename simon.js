@@ -5,9 +5,8 @@ $(document).ready(function(){
   var machineSeq = [];
   var userSeq = [];
   var buttonOrder = ["left_upper_arc", "right_upper_arc", "left_bottom_arc", "right_bottom_arc"];
-  var iLoop = 0;
   var userTurn = false; // if false, it's machine's turn
-  var val = "";
+  var numGuesses = 0;
 
   function displayCounts(num){
     var html = "<p id=\"counter_display\">" + num + "</p>";
@@ -28,87 +27,87 @@ $(document).ready(function(){
     return num;
   }
 
-  function loop(){
+  function loop(index){
+    userTurn = false;
     // 1 second setTimeout
     setTimeout(function () {
-      buttonEffect(machineSeq[iLoop]);
-      iLoop++;
+      buttonEffect(machineSeq[index]);
+      index++;
       //if counter < machineSeq.length, call function again
-      if (iLoop < machineSeq.length) {
-         loop();
+      if (index < machineSeq.length) {
+         loop(index);
+      } else {
+        startUserTurn();
       }
       console.log("seq: " + machineSeq);
     }, 1000)
     console.log("out function");
-    console.log("iloop: " + iLoop);
+    console.log("iloop: " + index);
     console.log("-----------");
+  }
+
+  function startUserTurn(){
+    numGuesses = 0;
+    userTurn = true;
+    userSeq = [];
   }
 
   // machine picks a button;
   function machinePick(){
     var pick = buttonOrder[randomButton() - 1];
-    userSeq = [];
     console.log("machineSeq: " + machineSeq);
     console.log("length: " + machineSeq.length);
-    if (machineSeq.length == 0){
-      // if the game just started, machine makes first pick
-      buttonEffect(pick);
-      console.log("empty");
-      machineSeq.push(pick);
-    } else {
-      machineSeq.push(pick);
-      loop();
-      iLoop = 0;
-      console.log("not empty");
-    }
+    // hacer push de pick a machineSeq y hacer el efecto de todos los botones del array
+    machineSeq.push(pick);
+    loop(0);
     console.log("pick: " + pick);
     console.log("machineSeq: " + machineSeq);
-    userTurn = true;
   }
 
-  function userPick(){
+  function userPick(button){
     var maxPicks = machineSeq.length;
-    var count = 0;
+    numGuesses++;
+    userSeq.push(button);
+    buttonEffect(button);
     console.log("MAX PICKS: " + maxPicks);
-    if (count < maxPicks){
-      buttonEffect(val);
-      userSeq.push(val);
-      count++;
-    } else {
+    if (numGuesses >= maxPicks){
       userTurn = false;
     }
   }
 
   $(".button").click(function() {
-    val = $(this).attr("id");
+    var val = $(this).attr("id");
     if (val === "start_button"){
       started = !started;
     }
     if (started){
+      //setTimeout(function() { machinePick(); }, 2000);
+      if (userTurn){
+        userPick(val);
+      }
       if (!userTurn){
-        setTimeout(function() { machinePick(); }, 2000);
-      } else {
-        userPick();
+        setTimeout(function() { machinePick(); }, 1000);
       }
       console.log("val: " + val);
-      if (val === "left_upper_arc"){
-        counter +=1;
-        // $("#left_upper_arc").css({"border-color":"#A9F5A9"});
-        buttonEffect("left_upper_arc");
-        // interval = setInterval(timer("left_upper_arc", "#A9F5A9"), 100);
-      } else if (val === "left_bottom_arc"){
-        //$("#left_bottom_arc").css({"border-color":"#F2F5A9"});
-        buttonEffect("left_bottom_arc");
-        counter += 1;
-      } else if (val === "right_upper_arc"){
-        // $("#right_upper_arc").css({"border-color":"#F78181"});
-        buttonEffect("right_upper_arc");
-        counter += 1;
-      } else if (val === "right_bottom_arc"){
-        counter += 1;
-        // $("#right_bottom_arc").css({"border-color":"#A9A9F5"});
-        buttonEffect("right_bottom_arc");
-      } else if (val === "start_button"){
+      // if (val === "left_upper_arc"){
+      //   counter +=1;
+      //   // $("#left_upper_arc").css({"border-color":"#A9F5A9"});
+      //   buttonEffect("left_upper_arc");
+      //   // interval = setInterval(timer("left_upper_arc", "#A9F5A9"), 100);
+      // } else if (val === "left_bottom_arc"){
+      //   //$("#left_bottom_arc").css({"border-color":"#F2F5A9"});
+      //   buttonEffect("left_bottom_arc");
+      //   counter += 1;
+      // } else if (val === "right_upper_arc"){
+      //   // $("#right_upper_arc").css({"border-color":"#F78181"});
+      //   buttonEffect("right_upper_arc");
+      //   counter += 1;
+      // } else if (val === "right_bottom_arc"){
+      //   counter += 1;
+      //   // $("#right_bottom_arc").css({"border-color":"#A9A9F5"});
+      //   buttonEffect("right_bottom_arc");
+      // } else
+      if (val === "start_button"){
         started = true;
       }
     }
