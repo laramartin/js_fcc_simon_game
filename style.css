@@ -1,23 +1,21 @@
 body{
-  background-color: gray;
+  background-color: #94F0A4;
   text-align: center;
 }
 
 .simon_container{
   margin-top: 30px;
   margin-bottom: 30px;
-  width: 300px;
-  height: 300px;
-  background-color: white;
+  width: 350px;
+  height: 350px;
 }
 
 .simon_device{
-  margin-top: 25px;
   width: 250px;
   height: 250px;
-  background-color: black;
+  background-color: #1E1E1E;
+  border-color: #1E1E1E;
   padding-top: 15px;
-  /*padding-left: 25px*/
   border: solid;
   border-radius: 150px;
 }
@@ -32,51 +30,51 @@ body{
 
 #left_upper_arc{
     border-left: 50px solid;
-    border-top: 50px   solid;
+    border-top: 50px solid;
     border-radius: 360px 0 0 0;
-    border-color: green;
+    background-color: #1CE134;
+    border-color: #1CE134;
     float: left;
     height: 100px;
-    /*padding-top: 1px;*/
     width: 103px;
     align-items: right;
 }
 
 #right_upper_arc{
-    border-right: 50px solid red;
-    border-top: 50px solid red;
+    border-right: 50px solid;
+    border-top: 50px solid;
+    border-color: #FF1F1F;
+    background-color: #FF1F1F;
     border-radius: 0 360px 0 0;
-    /*clear:left;*/
     float: right;
     height: 100px;
-    /*padding-top: 1px;*/
     width: 103px;
     margin-left: -33px;
 }
 
 #left_bottom_arc{
-    border-left: 50px solid yellow;
-    border-bottom: 50px solid yellow;
+    border-left: 50px solid #FFF81F;
+    border-bottom: 50px solid #FFF81F;
     border-radius: 0 0 0 360px;
+    background-color: #FFF81F;
     float: left;
     height: 100px;
-    /*padding-top: 1px;*/
     width: 103px;
     margin-top: 5px;
 }
 
 #right_bottom_arc{
-    border-bottom: 50px solid blue;
-    border-right: 50px solid blue;
+    border-bottom: 50px solid #2E5BD4;
+    border-right: 50px solid #2E5BD4;
     border-radius: 0 0 360px 0;
+    background-color: #2E5BD4;
     float: right;
     height: 100px;
-    /*padding-top: 1px;*/
     width: 103px;
     margin-top: 5px;
 }
 
-#simon_center{
+/*#simon_center{
   text-align: center;
   background-color: orange;
   margin: 50px 50px auto;
@@ -85,6 +83,21 @@ body{
   border: solid;
   border-radius: 150px;
   position: absolute;
+}*/
+
+#startGame {
+  margin-top: 20px;
+}
+
+#start_button {
+  height: 50px;
+  float: right;
+  border-radius: 8px;
+  box-shadow: 0 5px 0 gray;
+  font-size: 20px;
+  font-style: italic;
+  text-align: center;
+  /*box-shadow: 0 8px 0 #c5376d, 0 15px 20px rgba(0, 0, 0, .35);*/
 }
 
 #counter_display{
@@ -95,4 +108,12 @@ body{
   font-size: 20px;
   color: red;
   padding-top: 5px;
+  float: left;
+  border-radius: 5px;
+}
+
+footer {
+  color: black;
+  font-weight: bold;
+  text-align: center;
 }

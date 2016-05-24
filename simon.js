@@ -33,6 +33,7 @@ $(document).ready(function(){
     var str = "#".concat(button);
     var index = buttonOrder.indexOf(button) + 1;
     var sound = new Audio(buttonSoundArr[index - 1]);
+    //$(str).effect("pulsate", {times:1}, 40 );
     $(str).effect("pulsate", {times:1}, 40 );
     sound.play();
   }
