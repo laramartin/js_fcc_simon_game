@@ -2,19 +2,27 @@ $(document).ready(function(){
 
   var started = false;
   var counter = 0;
+  //var machineSeq = ["left_upper_arc","left_upper_arc","left_upper_arc","left_upper_arc","left_upper_arc","left_upper_arc","left_upper_arc","left_upper_arc","left_upper_arc","left_upper_arc","left_upper_arc","left_upper_arc","left_upper_arc","left_upper_arc","left_upper_arc","left_upper_arc","left_upper_arc","left_upper_arc","left_upper_arc"];
   var machineSeq = [];
   var userSeq = [];
   var buttonOrder = ["left_upper_arc", "right_upper_arc", "left_bottom_arc", "right_bottom_arc"];
   var userTurn = false; // if false, it's machine's turn
   var numGuesses = 0;
   var errorSound = new Audio("https://raw.githubusercontent.com/laramartin/js_fcc_simon_game/master/src/button-10.wav");
-  errorSound.volume = 0.3; 
+  errorSound.volume = 0.3;
   var buttonSoundArr = [
     "https://s3.amazonaws.com/freecodecamp/simonSound1.mp3",
     "https://s3.amazonaws.com/freecodecamp/simonSound2.mp3",
     "https://s3.amazonaws.com/freecodecamp/simonSound3.mp3",
     "https://s3.amazonaws.com/freecodecamp/simonSound4.mp3",
   ];
+
+  function reset(){
+    started = false;
+    counter = 0;
+    machineSeq = [];
+    userSeq = [];
+  }
 
   function displayCounts(num){
     var html = "<p id=\"counter_display\">" + num + "</p>";
@@ -62,24 +70,19 @@ $(document).ready(function(){
   // machine picks a button;
   function machinePick(){
     var pick = buttonOrder[randomButton() - 1];
-    //console.log("machineSeq: " + machineSeq);
-    //console.log("length: " + machineSeq.length);
     // push of machine's pick and do button effect of every item in array
     machineSeq.push(pick);
     loop(0);
-    //console.log("pick: " + pick);
     console.log("machineSeq: " + machineSeq);
   }
 
   function checkGuess(button, index){
-    console.log("index: " + index);
-    console.log("button: " + button);
-    console.log("machineSeq[index - 1]: " + machineSeq[index - 1]);
     if (machineSeq[index - 1] !== button){
       console.log("WROOOOOOOOOOOOOOONG");
       errorSound.play();
       return false;
     }
+    return true;
   }
 
   function userPick(button){
@@ -87,7 +90,12 @@ $(document).ready(function(){
     numGuesses++;
     userSeq.push(button);
     buttonEffect(button);
-    checkGuess(button, numGuesses);
+    var correct = checkGuess(button, numGuesses);
+    if (!correct){
+      reset();
+    } else if (correct && numGuesses == 20) {
+      alert("YOU WIN!!!!");
+    }
     if (numGuesses >= maxPicks){
       userTurn = false;
     }
