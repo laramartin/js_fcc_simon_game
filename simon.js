@@ -10,11 +10,17 @@ $(document).ready(function(){
   var numGuesses = 0;
   var errorSound = new Audio("https://raw.githubusercontent.com/laramartin/js_fcc_simon_game/master/src/button-10.wav");
   errorSound.volume = 0.3;
+  // var buttonSoundArr = [
+  //   "https://s3.amazonaws.com/freecodecamp/simonSound1.mp3",
+  //   "https://s3.amazonaws.com/freecodecamp/simonSound2.mp3",
+  //   "https://s3.amazonaws.com/freecodecamp/simonSound3.mp3",
+  //   "https://s3.amazonaws.com/freecodecamp/simonSound4.mp3",
+  // ];
   var buttonSoundArr = [
-    "https://s3.amazonaws.com/freecodecamp/simonSound1.mp3",
-    "https://s3.amazonaws.com/freecodecamp/simonSound2.mp3",
-    "https://s3.amazonaws.com/freecodecamp/simonSound3.mp3",
-    "https://s3.amazonaws.com/freecodecamp/simonSound4.mp3",
+    "https://raw.githubusercontent.com/laramartin/js_fcc_simon_game/master/src/simonSound1.mp3",
+    "https://raw.githubusercontent.com/laramartin/js_fcc_simon_game/master/src/simonSound2.mp3",
+    "https://raw.githubusercontent.com/laramartin/js_fcc_simon_game/master/src/simonSound3.mp3",
+    "https://raw.githubusercontent.com/laramartin/js_fcc_simon_game/master/src/simonSound4.mp3",
   ];
 
   function reset(){
@@ -33,8 +39,7 @@ $(document).ready(function(){
     var str = "#".concat(button);
     var index = buttonOrder.indexOf(button) + 1;
     var sound = new Audio(buttonSoundArr[index - 1]);
-    //$(str).effect("pulsate", {times:1}, 40 );
-    $(str).effect("pulsate", {times:1}, 40 );
+    $(str).effect("pulsate", {times:1}, 40);
     sound.play();
   }
 
@@ -55,11 +60,7 @@ $(document).ready(function(){
       } else {
         startUserTurn();
       }
-      //console.log("seq: " + machineSeq);
     }, 1000)
-    // console.log("out function");
-    // console.log("iloop: " + index);
-    // console.log("-----------");
   }
 
   function startUserTurn(){
@@ -79,7 +80,6 @@ $(document).ready(function(){
 
   function checkGuess(button, index){
     if (machineSeq[index - 1] !== button){
-      console.log("WROOOOOOOOOOOOOOONG");
       errorSound.play();
       return false;
     }
@@ -108,46 +108,34 @@ $(document).ready(function(){
       started = !started;
     }
     if (started){
-      //setTimeout(function() { machinePick(); }, 2000);
       if (userTurn){
-
         userPick(val);
       }
       if (!userTurn){
+        if (machineSeq.length !== 0){
+          counter += 1;
+        }
         setTimeout(function() { machinePick(); }, 1000);
       }
-      //console.log("val: " + val);
-      // if (val === "left_upper_arc"){
-      //   counter +=1;
-      //   // $("#left_upper_arc").css({"border-color":"#A9F5A9"});
-      //   buttonEffect("left_upper_arc");
-      //   // interval = setInterval(timer("left_upper_arc", "#A9F5A9"), 100);
-      // } else if (val === "left_bottom_arc"){
-      //   //$("#left_bottom_arc").css({"border-color":"#F2F5A9"});
-      //   buttonEffect("left_bottom_arc");
-      //   counter += 1;
-      // } else if (val === "right_upper_arc"){
-      //   // $("#right_upper_arc").css({"border-color":"#F78181"});
-      //   buttonEffect("right_upper_arc");
-      //   counter += 1;
-      // } else if (val === "right_bottom_arc"){
-      //   counter += 1;
-      //   // $("#right_bottom_arc").css({"border-color":"#A9A9F5"});
-      //   buttonEffect("right_bottom_arc");
-      // } else
       if (val === "start_button"){
         started = true;
       }
+      displayCounts(counter);
     }
 
-    //userSeq.push(val);
-    console.log("userSeq: " + userSeq);
-    console.log("started: " + started);
-    //console.log("counter: " + counter);
     console.log("--------");
-    displayCounts(counter);
+
   });
 
+  displayCounts("\n");
 
-  displayCounts("--");
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-78227272-1', 'auto');
+  ga('send', 'pageview');
+
 });
