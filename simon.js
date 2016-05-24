@@ -7,6 +7,14 @@ $(document).ready(function(){
   var buttonOrder = ["left_upper_arc", "right_upper_arc", "left_bottom_arc", "right_bottom_arc"];
   var userTurn = false; // if false, it's machine's turn
   var numGuesses = 0;
+  var errorSound = new Audio("https://raw.githubusercontent.com/laramartin/js_fcc_simon_game/master/src/button-10.wav");
+  errorSound.volume = 0.3; 
+  var buttonSoundArr = [
+    "https://s3.amazonaws.com/freecodecamp/simonSound1.mp3",
+    "https://s3.amazonaws.com/freecodecamp/simonSound2.mp3",
+    "https://s3.amazonaws.com/freecodecamp/simonSound3.mp3",
+    "https://s3.amazonaws.com/freecodecamp/simonSound4.mp3",
+  ];
 
   function displayCounts(num){
     var html = "<p id=\"counter_display\">" + num + "</p>";
@@ -16,8 +24,7 @@ $(document).ready(function(){
   function buttonEffect(button){
     var str = "#".concat(button);
     var index = buttonOrder.indexOf(button) + 1;
-    var url = "https://s3.amazonaws.com/freecodecamp/simonSound" + index + ".mp3";
-    var sound = new Audio(url);
+    var sound = new Audio(buttonSoundArr[index - 1]);
     $(str).effect("pulsate", {times:1}, 40 );
     sound.play();
   }
@@ -39,11 +46,11 @@ $(document).ready(function(){
       } else {
         startUserTurn();
       }
-      console.log("seq: " + machineSeq);
+      //console.log("seq: " + machineSeq);
     }, 1000)
-    console.log("out function");
-    console.log("iloop: " + index);
-    console.log("-----------");
+    // console.log("out function");
+    // console.log("iloop: " + index);
+    // console.log("-----------");
   }
 
   function startUserTurn(){
@@ -55,13 +62,24 @@ $(document).ready(function(){
   // machine picks a button;
   function machinePick(){
     var pick = buttonOrder[randomButton() - 1];
-    console.log("machineSeq: " + machineSeq);
-    console.log("length: " + machineSeq.length);
-    // hacer push de pick a machineSeq y hacer el efecto de todos los botones del array
+    //console.log("machineSeq: " + machineSeq);
+    //console.log("length: " + machineSeq.length);
+    // push of machine's pick and do button effect of every item in array
     machineSeq.push(pick);
     loop(0);
-    console.log("pick: " + pick);
+    //console.log("pick: " + pick);
     console.log("machineSeq: " + machineSeq);
+  }
+
+  function checkGuess(button, index){
+    console.log("index: " + index);
+    console.log("button: " + button);
+    console.log("machineSeq[index - 1]: " + machineSeq[index - 1]);
+    if (machineSeq[index - 1] !== button){
+      console.log("WROOOOOOOOOOOOOOONG");
+      errorSound.play();
+      return false;
+    }
   }
 
   function userPick(button){
@@ -69,7 +87,7 @@ $(document).ready(function(){
     numGuesses++;
     userSeq.push(button);
     buttonEffect(button);
-    console.log("MAX PICKS: " + maxPicks);
+    checkGuess(button, numGuesses);
     if (numGuesses >= maxPicks){
       userTurn = false;
     }
@@ -83,12 +101,13 @@ $(document).ready(function(){
     if (started){
       //setTimeout(function() { machinePick(); }, 2000);
       if (userTurn){
+
         userPick(val);
       }
       if (!userTurn){
         setTimeout(function() { machinePick(); }, 1000);
       }
-      console.log("val: " + val);
+      //console.log("val: " + val);
       // if (val === "left_upper_arc"){
       //   counter +=1;
       //   // $("#left_upper_arc").css({"border-color":"#A9F5A9"});
@@ -115,7 +134,7 @@ $(document).ready(function(){
     //userSeq.push(val);
     console.log("userSeq: " + userSeq);
     console.log("started: " + started);
-    console.log("counter: " + counter);
+    //console.log("counter: " + counter);
     console.log("--------");
     displayCounts(counter);
   });
