@@ -8,6 +8,7 @@ $(document).ready(function(){
   var buttonOrder = ["left_upper_arc", "right_upper_arc", "left_bottom_arc", "right_bottom_arc"];
   var userTurn = false; // if false, it's machine's turn
   var numGuesses = 0;
+  var strict = false;
   var errorSound = new Audio("https://raw.githubusercontent.com/laramartin/js_fcc_simon_game/master/src/button-10.wav");
   errorSound.volume = 0.3;
   // var buttonSoundArr = [
@@ -106,6 +107,13 @@ $(document).ready(function(){
     var val = $(this).attr("id");
     if (val === "start_button"){
       started = !started;
+    } else if (val === "strict_button") {
+      strict = !strict;
+      if (strict){
+        $("#strict_button").css("box-shadow", "6px 6px 6px green");
+      } else {
+        $("#strict_button").css("box-shadow", "6px 6px 6px red");
+      }
     }
     if (started){
       if (userTurn){

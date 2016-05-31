@@ -79,6 +79,7 @@ body{
 }
 
 #start_button {
+  outline: none;
   height: 50px;
   float: right;
   border-radius: 8px;
@@ -86,6 +87,19 @@ body{
   font-size: 20px;
   font-style: italic;
   text-align: center;
+}
+
+#strict_button {
+  outline: none;
+  height: 50px;
+  width: 100px;
+  float: right;
+  border-radius: 8px;
+  box-shadow: 0 5px 0 gray;
+  font-size: 20px;
+  font-style: italic;
+  text-align: center;
+  box-shadow: 6px 6px 6px red;
 }
 
 #counter_display{
