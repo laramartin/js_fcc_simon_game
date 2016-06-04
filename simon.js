@@ -29,8 +29,17 @@ $(document).ready(function(){
     counter = 0;
     machineSeq = [];
     userSeq = [];
+    clearTimeout();
   }
 
+  function buttonLedColor(button){
+    var str = "#".concat(button);
+    if (strict || started){
+      $(str).css("box-shadow", "6px 6px 6px green");
+    } else {
+      $(str).css("box-shadow", "6px 6px 6px red");
+    }
+  }
   function displayCounts(num){
     var html = "<p id=\"counter_display\">" + num + "</p>";
     $("#counter_display").html(html);
@@ -91,10 +100,14 @@ $(document).ready(function(){
     var maxPicks = machineSeq.length;
     numGuesses++;
     userSeq.push(button);
+    console.log("userseq: " + userSeq);
     buttonEffect(button);
     var correct = checkGuess(button, numGuesses);
-    if (!correct){
+    if (!correct && strict){
       reset();
+    } else if (!correct && !strict) {
+      // repeat machine picks again, no adding a new one!!!!!!!!
+      loop(machineSeq);
     } else if (correct && numGuesses == 20) {
       alert("YOU WIN!!!!");
     }
@@ -107,12 +120,13 @@ $(document).ready(function(){
     var val = $(this).attr("id");
     if (val === "start_button"){
       started = !started;
+      buttonLedColor(val);
     } else if (val === "strict_button") {
       strict = !strict;
       if (strict){
-        $("#strict_button").css("box-shadow", "6px 6px 6px green");
+        buttonLedColor(val);
       } else {
-        $("#strict_button").css("box-shadow", "6px 6px 6px red");
+        buttonLedColor(val);
       }
     }
     if (started){
