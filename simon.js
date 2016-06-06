@@ -117,7 +117,6 @@ $(document).ready(function(){
     var maxPicks = machineSeq.length;
     numGuesses++;
     userSeq.push(button);
-    console.log("userseq: " + userSeq);
     buttonEffect(button);
     var correct = checkGuess(button, numGuesses);
     // if wrong and playing strict, restart
